@@ -1,0 +1,15 @@
+source :rubygems
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'dm-core'
+gem 'dm-sqlite-adapter'
+gem 'dm-migrations'
+gem 'dm-validations'
+gem 'dm-timestamps'
+gem 'sprockets'
+gem 'sprockets-sass'
+gem 'sprockets-helpers'
+gem 'haml'
+gem 'sass'
+gem 'shotgun'

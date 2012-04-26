@@ -1,0 +1,4 @@
+api_key: kurzundknapp
+pagetitle: klitzeklein! :D
+redirect_to: http://www.google.de
+hostname: localhost:9393
