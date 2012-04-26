@@ -13,7 +13,19 @@ Quick Setup
 * git clone git@github.com:username/klitzeklein.git
 * rvm rvmrc trust klitzeklein/.rvmrc
 * cd klitzeklein
+* git submodule update --init
 * gem install bundler && bundle install
 * cp config.sample.yml config.yml
 * shotgun config.ru
 * Navigate your browser to "http://localhost:9393/items", Username: "admin", Password: api_key (see config.yml)
+
+Acknowledgements
+----------------
+
+* Bootstrap by Twitter - http://twitter.github.com/
+* Color Scheme by Bootswatch - http://bootswatch.com/
+
+Licence
+-------
+
+Klitzeklein is licensed under the GPLv2+. Please drop me a line if you use or modify it.
