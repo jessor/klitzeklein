@@ -104,11 +104,11 @@ end
 post '/items/new' do
   protected!
 
-  @item = Item.first(:url => params['url'])
+  @item = Item.get(:url => params['url'])
 
   # TODO: validate a bit
   if @item.nil?
-    if params['item_id'].nil? || params['item_id'] == "items"
+    if params['item_id'].empty? or params['item_id'] == 'items'
       o = [('a'..'z'),('0'..'9')].map{|i| i.to_a}.flatten
       begin item_id = (0..3).map{ o[rand(o.length)] }.join end until not Item.get(item_id)
     else
