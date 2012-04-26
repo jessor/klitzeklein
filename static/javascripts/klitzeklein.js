@@ -1,6 +1,7 @@
 //= require jquery.min
 //= require jquery.dataTables.min
 //= require jquery.dataTables.bs2
+//= require bootstrap-alert
 //= require_self
 
 jQuery(function(){
@@ -14,5 +15,7 @@ jQuery(function(){
 		},
         "aaSorting":        []
     });
+
+    $(".alert").alert()
 
 });

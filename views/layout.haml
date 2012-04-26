@@ -9,5 +9,6 @@
     %script{ :src => '/static/klitzeklein.js' }
   %body
     #wrapper{ :class => 'container' }
+      = styled_flash
       = partial(:_header)
       = yield

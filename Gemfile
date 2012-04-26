@@ -2,6 +2,7 @@ source :rubygems
 
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'sinatra-flash'
 gem 'dm-core'
 gem 'dm-sqlite-adapter'
 gem 'dm-migrations'

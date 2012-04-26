@@ -4,6 +4,7 @@ require 'bundler/setup'
 Bundler.require(:default)
 
 require 'sinatra/config_file'
+require 'sinatra/flash'
 #require 'json'
 
 ###
@@ -26,6 +27,14 @@ DataMapper.auto_upgrade!
 
 configure do
   config_file 'config.yml'
+  enable :sessions
+end
+
+###
+
+helpers do
+  # include Rack::Utils
+  alias_method :h, :escape_html
 
   def protected!
     unless authorized?
@@ -41,16 +50,7 @@ configure do
 
   def api_request?
     request.accept == ['application/json'] or request.xhr?
-  end
-
-end
-
-###
-
-helpers do
-  # include Rack::Utils
-  alias_method :h, :escape_html
-
+  end                
   def partial(page, options={})
     unless @partials == false
       haml page, options.merge!(:layout => false)
@@ -68,6 +68,13 @@ helpers do
     else
       s
     end
+  end
+
+  def styled_flash(key=:flash)
+    return "" if flash(key).empty?
+    id = (key == :flash ? "flash" : "flash_#{key}")
+    messages = flash(key).collect {|message| "  <div class='alert alert-block #{message[0]}'><a data-dismiss='alert' class='close'>&#215;</a><p>#{message[1]}</p></div>\n"}
+    "<div class='row'><div class='span12' id='#{id}'>\n" + messages.join + "</div></div>"
   end
 end
 
@@ -104,7 +111,7 @@ end
 post '/items/new' do
   protected!
 
-  @item = Item.get(:url => params['url'])
+  @item = Item.first(:url => params['url'])
 
   # TODO: validate a bit
   if @item.nil?
@@ -115,7 +122,15 @@ post '/items/new' do
       item_id = params['item_id']
     end
     @item = Item.new(:url => params['url'], :item_id => item_id)
-    @item.save
+
+    if @item.save
+      flash[:'alert-success'] = "Item successfully created."
+    else
+      flash[:'alert-error'] = "Error: #{@item.errors.full_messages.join(', ')}"
+    end
+
+  else
+    flash[:'alert-error'] = "Error: Item exists already."
   end
 
   redirect '/items'
