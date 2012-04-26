@@ -1,0 +1,19 @@
+%div{ :class => 'row' }
+
+  %div{ :class => 'span4' }
+    %div{ :class => 'page-header' }
+      %h1 Edit this one
+    %form{ :action => "/items/#{@item.item_id}", :method => 'post', :class => 'well' }
+      %label{ :for => 'url' }
+        Full URL
+      %input{ :type => 'text', :name => 'url', :value => @item.url, :class => 'span3' }
+      %label{ :for => 'item_id' }
+        Short URL
+      %input{ :type => 'text', :name => 'item_id', :value => @item.item_id, :class => 'span3' }
+      %label{ :for => 'clicks' }
+        Clicks
+      %input{ :type => 'text', :name => 'clicks', :value => @item.clicks, :class => 'span3' }
+      %button{ :type => 'submit', :class => 'btn' }
+        Submit
+
+  = partial(:_list)

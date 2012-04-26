@@ -13,22 +13,6 @@
       %button{ :type => 'submit', :class => 'btn' }
         Submit
 
-  %div{ :class => 'span8' }
-    %div{ :class => 'page-header' }
-      %h1 Recent Urls
-    - if @items
-      %table{ :class => 'table table-condensed table-striped' }
-        %thead
-          %tr
-            %th Full
-            %th Short
-            %th Clicks
-        %tbody
-          - @items.each do |i|
-            %tr
-              %td
-                %a{ :href => "#{i.url}", :title => "#{i.url}" }> #{h shortify(i.url, 50)}
-              %td
-                %a{ :href => "#{i.item_id}", :title => "#{i.item_id}" }> #{h shortify(i.item_id, 10)}
-              %td
-                = i.clicks
+  = partial(:_list)
+
+

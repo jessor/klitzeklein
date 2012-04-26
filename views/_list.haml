@@ -1,0 +1,27 @@
+%div{ :class => 'span8' }
+  %div{ :class => 'page-header' }
+    %h1 Recent Urls
+  - if @items
+    %table{ :class => 'table table-condensed table-striped' }
+      %thead
+        %tr
+          %th Full
+          %th Short
+          %th Clicks
+          %th
+      %tbody
+        - @items.each do |i|
+          %tr{ :id => "#{i.item_id}" }
+            %td
+              %a{ :href => "#{i.url}", :title => "#{i.url}" }> #{h shortify(i.url, 50)}
+            %td
+              %a{ :href => "#{i.item_id}", :title => "#{i.item_id}" }> #{h shortify(i.item_id, 10)}
+            %td
+              = i.clicks
+            %td
+              %a{ :href => "/items/#{i.item_id}", :class => 'edit' }
+                %i{ :class => 'icon-edit icon-white' }
+              %form{ :action => "/items/#{i.item_id}", :method => 'post', :id => 'delete' }
+                %input{ :name => '_method', :type => 'hidden', :value => 'delete' }
+                %button{ :type => 'submit' }
+                  %i{ :class => 'icon-remove icon-white' }

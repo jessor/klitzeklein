@@ -28,6 +28,7 @@ DataMapper.auto_upgrade!
 configure do
   config_file 'config.yml'
   enable :sessions
+  use Rack::MethodOverride
 end
 
 ###
@@ -99,6 +100,7 @@ end
 
 get '/:item_id' do |id|
   @item = Item.first(:item_id => id)
+
   if @item.nil?
     redirect settings.redirect_to
   else
@@ -107,6 +109,47 @@ get '/:item_id' do |id|
     redirect @item.url, 301
   end
 end    
+
+get '/items/:item_id' do |id|
+  protected!
+
+  @items = Item.all(:order => [:created_at.asc])
+  @item = Item.first(:item_id => id)
+
+  if @item.nil?
+    flash[:'alert-error'] = "Error: Item not found."
+    redirect '/items'
+  else
+    haml :edit
+  end
+end
+
+post '/items/:item_id' do |old_item_id|
+  protected!
+
+  @item = Item.first(:item_id => old_item_id)
+  
+  if @item.update(:url => params['url'], :item_id => params['item_id'], :clicks => params['clicks'])
+    flash[:'alert-success'] = "Item updated."
+  else
+    flash[:'alert-error'] = "Error: #{@item.errors.full_messages.join(', ')}"
+  end
+
+  redirect '/items'
+end
+
+delete '/items/:item_id' do |item_id|
+  protected!
+
+  @item = Item.first(:item_id => item_id)
+  if @item.destroy
+    flash[:'alert-success'] = "Item #{item_id} deleted."
+  else
+    flash[:'alert-error'] = "Item #{item_id} does not exist."
+  end
+  
+  redirect '/items'
+end
 
 post '/items/new' do
   protected!
