@@ -4,6 +4,7 @@
     %div{ :class => 'page-header' }
       %h1 Edit this one
     %form{ :action => "/items/#{@item.item_id}", :method => 'post', :class => 'well' }
+      %input{ :name => '_method', :type => 'hidden', :value => 'put' }
       %label{ :for => 'url' }
         Full URL
       %input{ :type => 'text', :name => 'url', :value => @item.url, :class => 'span3' }
